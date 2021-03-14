@@ -107,6 +107,9 @@ def change_temp(cf):
     ser.close()
 
 def update_display(window):
+    if len(res_arr) < 2:
+        return
+    
     # make call to HRRX to get updated display values.
     ser = serial.Serial(COM_PORT, BAUD_RATE, timeout=SERIAL_TIMEOUT)
     ser.write(b'HRRX;')
