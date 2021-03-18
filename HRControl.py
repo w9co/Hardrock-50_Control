@@ -4,6 +4,10 @@ import time
 
 import PySimpleGUI as sg
 
+COM_PORT = 'COM3'
+BAUD_RATE = 19200
+SERIAL_TIMEOUT = 1
+
 ## HRMD - keying mode
 #0=off
 #1=ptt
@@ -62,10 +66,6 @@ sg.theme_add_new('Dashboard', theme_dict)
 sg.LOOK_AND_FEEL_TABLE['Dashboard'] = theme_dict
 sg.theme('Dashboard')
 
-COM_PORT = 'COM3'
-BAUD_RATE = 19200
-SERIAL_TIMEOUT = 1
-
 POLL_FREQUENCY = 2000
 BORDER_COLOR = '#C7D5E0'
 DARK_HEADER_COLOR = '#1B2838'
@@ -107,6 +107,13 @@ def change_temp(cf):
     ser.close()
 
 def update_display(window):
+    # make call to HRRX to get updated display values.
+    ser = serial.Serial(COM_PORT, BAUD_RATE, timeout=SERIAL_TIMEOUT)
+    ser.write(b'HRRX;')
+    time.sleep(0.5)
+    result = ser.readline()
+    result = result.decode("utf-8").rstrip().replace(';', '')
+    res_arr = result.split(',')
     if len(res_arr) < 2:
         return
     
