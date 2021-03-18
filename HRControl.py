@@ -116,14 +116,6 @@ def update_display(window):
     res_arr = result.split(',')
     if len(res_arr) < 2:
         return
-    
-    # make call to HRRX to get updated display values.
-    ser = serial.Serial(COM_PORT, BAUD_RATE, timeout=SERIAL_TIMEOUT)
-    ser.write(b'HRRX;')
-    time.sleep(0.5)
-    result = ser.readline()
-    result = result.decode("utf-8").rstrip().replace(';', '')
-    res_arr = result.split(',')
 
     #update band display
     for band in bands:
