@@ -98,7 +98,7 @@ def change_keying(keying):
     ser.close()
 
 def change_temp(cf):
-    # make call to HRMD to change keying.
+    # make call to HRMD to change temp display.
     ser = serial.Serial(COM_PORT, BAUD_RATE, timeout=SERIAL_TIMEOUT)
     if cf == 'F':
         ser.write(b'HRTP0;')
